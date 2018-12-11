@@ -1,28 +1,38 @@
-angular.module('F1FeederApp.services', [])
-  .factory('ergastAPIservice', function($http) {
+angular.module('app.services', [])
+  .factory('api', function($http) {
 
-    var ergastAPI = {};
+    var api = {};
+    var API_URL = "http://simple.da/api/v1/";
 
-    ergastAPI.getDrivers = function() {
+    api.getUsers = function() {
       return $http({
-        method: 'JSONP', 
-        url: 'http://ergast.com/api/f1/2013/driverStandings.json?callback=JSON_CALLBACK'
+        method: 'GET',
+        url: API_URL + 'user'
       });
     }
 
-    ergastAPI.getDriverDetails = function(id) {
+    api.getList = function() {
       return $http({
-        method: 'JSONP', 
-        url: 'http://ergast.com/api/f1/2013/drivers/'+ id +'/driverStandings.json?callback=JSON_CALLBACK'
-      });
+        method: 'GET',
+        url: 'https://api.github.com/repos/angular/angular/commits'
+      })
     }
 
-    ergastAPI.getDriverRaces = function(id) {
+    api.signupUser = function(data) {
       return $http({
-        method: 'JSONP', 
-        url: 'http://ergast.com/api/f1/2013/drivers/'+ id +'/results.json?callback=JSON_CALLBACK'
-      });
+        method: 'POST',
+        url: API_URL + 'user',
+        data: data
+      })
     }
 
-    return ergastAPI;
+    api.loginUser = function(data) {
+      return $http({
+        method: 'POST',
+        url: API_URL + 'user/auth',
+        data: data
+      })
+    }
+
+    return api;
   });
